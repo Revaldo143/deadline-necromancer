@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deadline Necromancer — Resurrect Your Abandoned Projects</title>
+<meta name="description" content="A local-first AI that performs autopsies on your dead git repos and writes the plan to bring them back to life. Powered by Gemma via Ollama. Your code never leaves your machine.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚰️</text></svg>">
+</head>
+<body>
+<div class="fog fog-a"></div>
+<div class="fog fog-b"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 48 48" width="40" height="40" fill="none">
+        <path d="M10 42V22a14 14 0 0 1 28 0v20" stroke="#59e3a1" stroke-width="2.5"/>
+        <path d="M4 42h40" stroke="#59e3a1" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M24 16v10M19 21h10" stroke="#b39dfa" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Deadline <span class="accent">Necromancer</span></h1>
+      <p class="brand-sub">Every dead project deserves a second life.</p>
+    </div>
+  </div>
+  <div id="ollamaStatus" class="status-pill" title="Local model status">
+    <span class="dot dot-unknown"></span><span id="ollamaStatusText">Checking the spirits…</span>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <h2>Your projects aren&rsquo;t dead.<br><span class="hero-accent">They&rsquo;re just waiting to be raised.</span></h2>
+    <p class="hero-sub">
+      Point the Necromancer at your projects folder. It performs an autopsy on every abandoned
+      repo — when it died, what it left unfinished — then a <strong>local Gemma model</strong> writes
+      the resurrection plan. The laziest way to finish a project is to not start a new one.
+    </p>
+    <div class="scanbar">
+      <input id="scanPath" type="text" spellcheck="false" placeholder="Folder to scan for dead projects…">
+      <button id="scanBtn" class="btn-primary">Scan the graveyard</button>
+    </div>
+    <p class="scan-hint" id="scanHint"></p>
+  </section>
+
+  <section class="stats" id="statsRow" hidden>
+    <div class="stat"><span class="stat-num" id="statCorpses">0</span><span class="stat-label">corpses found</span></div>
+    <div class="stat"><span class="stat-num" id="statDays">0</span><span class="stat-label">combined days dead</span></div>
+    <div class="stat"><span class="stat-num" id="statTodos">0</span><span class="stat-label">TODOs left behind</span></div>
+    <div class="stat"><span class="stat-num" id="statHours">—</span><span class="stat-label">hours saved by reviving</span></div>
+  </section>
+
+  <section class="controls" id="controlsRow" hidden>
+    <span id="resultCount" class="result-count"></span>
+    <label class="sort-label">Sort
+      <select id="sortSelect">
+        <option value="dead-desc">Longest dead</option>
+        <option value="dead-asc">Recently deceased</option>
+        <option value="todo-desc">Most TODOs</option>
+        <option value="commits-desc">Most commits</option>
+      </select>
+    </label>
+  </section>
+
+  <section id="grid" class="grid" aria-live="polite"></section>
+
+  <section id="emptyState" class="empty" hidden>
+    <div class="empty-icon">🪦</div>
+    <h3>No corpses in this graveyard</h3>
+    <p>No git repositories found under that path. Point the scan at the folder where your
+       abandoned projects actually rest — or conjure the demo graveyard:</p>
+    <code class="empty-code">python scripts/seed_graveyard.py</code>
+    <p class="empty-then">then scan the <strong>sample_graveyard</strong> folder it creates.</p>
+  </section>
+</main>
+
+<footer>
+  <p>Runs 100% locally · Your code never leaves this machine · Open-weight Gemma via Ollama · MIT</p>
+</footer>
+
+<div id="modalBackdrop" class="modal-backdrop hidden">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<div id="toasts" class="toasts"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
