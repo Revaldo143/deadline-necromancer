@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 
+from app.config import settings
 from app.main import app
 
 client = TestClient(app)
@@ -10,16 +11,19 @@ def test_health_shape():
     assert resp.status_code == 200
     body = resp.json()
     assert body["status"] == "ok"
-    assert body["model"] == "gemma2:2b"
+    assert body["model"] == settings.MODEL
     assert "ollama_reachable" in body
     assert "default_scan_path" in body
 
 
-def test_scan_default_path():
+def test_scan_default_path(make_repo, tmp_path, monkeypatch):
+    make_repo("default-corpse")
+    monkeypatch.setattr(settings, "DEFAULT_SCAN_PATH", str(tmp_path))
     resp = client.post("/api/scan", json={})
     assert resp.status_code == 200
     body = resp.json()
     assert "projects" in body
+    assert len(body["projects"]) == 1
 
 
 def test_scan_finds_repos(make_repo, tmp_path):

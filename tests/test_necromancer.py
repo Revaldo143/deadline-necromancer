@@ -2,6 +2,7 @@ import json
 
 import pytest
 
+from app.config import settings
 from app.core import necromancer
 from app.models.schemas import ProjectFacts
 
@@ -26,7 +27,7 @@ class FakeTags:
         pass
 
     def json(self):
-        return {"models": [{"name": "gemma2:2b"}]}
+        return {"models": [{"name": settings.MODEL}]}
 
 
 class FakeChat:
