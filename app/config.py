@@ -18,7 +18,7 @@ except ImportError:
 class Settings:
     # Ollama (local, open-weight models). The app NEVER calls a cloud LLM.
     OLLAMA_HOST: str = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
-    MODEL: str = os.environ.get("NECRO_MODEL", "gemma3:12b")
+    MODEL: str = os.environ.get("NECRO_MODEL", "gemma2:2b")
     OLLAMA_TIMEOUT: float = float(os.environ.get("OLLAMA_TIMEOUT", "300"))
     OLLAMA_HEALTH_TIMEOUT: float = float(os.environ.get("OLLAMA_HEALTH_TIMEOUT", "3"))
 

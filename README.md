@@ -48,7 +48,7 @@ acceptable to use.
 
 ```bash
 # 1. Install Ollama and pull the model (one time)
-ollama pull gemma3:12b        # smaller machines: gemma3:4b works too
+ollama pull gemma2:2b        # smaller machines: gemma3:4b works too
 
 # 2. Install and run
 python -m venv .venv && source .venv/bin/activate
@@ -76,7 +76,7 @@ Environment variables (see `.env.example`):
 | Variable          | Default                  | Meaning                        |
 | ----------------- | ------------------------ | ------------------------------ |
 | `OLLAMA_HOST`     | `http://localhost:11434` | Ollama endpoint                |
-| `NECRO_MODEL`     | `gemma3:12b`             | Open-weight model for plans    |
+| `NECRO_MODEL`     | `gemma2:2b`             | Open-weight model for plans    |
 | `DEFAULT_SCAN_PATH` | `~/projects`           | Folder scanned on first load   |
 | `PORT`            | `8000`                   | Server port                    |
 
